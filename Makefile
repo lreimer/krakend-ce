@@ -6,7 +6,7 @@
 
 BIN_NAME :=krakend
 OS := $(shell uname | tr '[:upper:]' '[:lower:]')
-VERSION := 1.3.0
+VERSION := 1.3.1
 PKGNAME := krakend
 LICENSE := Apache 2.0
 VENDOR=
@@ -18,7 +18,7 @@ DESC := High performance API gateway. Aggregate, filter, manipulate and add midd
 MAINTAINER := Daniel Ortiz <dortiz@devops.faith>
 DOCKER_WDIR := /tmp/fpm
 DOCKER_FPM := devopsfaith/fpm
-GOLANG_VERSION := 1.15.8
+GOLANG_VERSION := 1.16.3
 
 FPM_OPTS=-s dir -v $(VERSION) -n $(PKGNAME) \
   --license "$(LICENSE)" \
@@ -91,7 +91,7 @@ build_on_docker:
 	docker run --rm -it -v "${PWD}:/app" -w /app golang:${GOLANG_VERSION} make build
 
 docker:
-	docker build --pull -t devopsfaith/krakend:${VERSION} .
+	docker build --pull -t qaware/krakend:${VERSION}-buster-slim .
 
 builder/skel/%/etc/init.d/krakend: builder/files/krakend.init
 	mkdir -p "$(dir $@)"

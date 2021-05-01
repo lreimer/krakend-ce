@@ -1,0 +1,15 @@
+FROM gcr.io/distroless/base
+
+LABEL maintainer="dortiz@devops.faith"
+
+USER nonroot
+
+VOLUME [ "/etc/krakend" ]
+WORKDIR /etc/krakend
+
+ENTRYPOINT [ "/usr/bin/krakend" ]
+CMD [ "run", "-c", "/etc/krakend/krakend.json" ]
+
+EXPOSE 8000 8090
+
+COPY --chown=65532:65532 krakend /usr/bin/krakend
