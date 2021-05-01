@@ -90,8 +90,14 @@ test: build
 build_on_docker:
 	docker run --rm -it -v "${PWD}:/app" -w /app golang:${GOLANG_VERSION} make build
 
-docker:
-	docker build --pull -t qaware/krakend:${VERSION}-buster-slim .
+docker: build_on_docker
+	docker build --pull -t lreimer/krakend:${VERSION}-buster-slim .
+
+docker_centos: build_on_docker
+	docker build --pull -f Dockerfile.centos -t lreimer/krakend:${VERSION}-centos .
+
+docker_distroless: build_on_docker
+	docker build --pull -f Dockerfile.distroless -t lreimer/krakend:${VERSION}-distroless .
 
 builder/skel/%/etc/init.d/krakend: builder/files/krakend.init
 	mkdir -p "$(dir $@)"
